@@ -108,7 +108,8 @@ Javascript.
 5.  JSON
 
 Object literals are singleton objecst with attributes and methods.
-It is an object that is itself an object instance
+It is an object that is itself an object instance, you cannot `new` an
+object literal.
 
     // Object literals are evaluated immediatly
     // This is important to note if you are using jQuery
@@ -122,10 +123,87 @@ It is an object that is itself an object instance
     };
 
     console.log(literal.method());
-    console.log(literal['method']());
     console.log(literal['assignedImmediatlyAsString']);
+    console.log(literal['method']());
 
 #### Constructor Functions
 
 1.  Every function in javascript returns something, even if that
     something is `undefined`;
+
+    function evenThoughIDontSpecifyReturnIReturnUndefined () {
+      console.log("look for undefined after me");
+    };
+
+    evenThoughIDontSpecifyReturnIReturnUndefined();
+
+2.  Constructor functions have a convention of starting with a capital
+    letter.
+
+    // Never return anything from a constructor function
+    function ImmaConstructor() {
+      return {
+        bad: "idea",
+        my:  "context",
+        was: "lost"
+      };
+    };
+
+    var ohNo = new ImmaConstructor();
+    console.log(ohNo);
+
+3.  You can tack things on to a new constructor instance
+    
+    // This is horrible on memory, there is a better way
+    function ImmaConstructor() {
+      this.works = function () {console.log('this works')};
+      this.alsoWorks = function () {console.log('this also works')};
+    };
+
+    var imma = new ImmaConstructor();
+    imma.works();
+    imma.alsoWorks();
+
+####  Prototypes
+
+1.  Prototypes cannot be changed once an object is instantiated, thus
+    you cannot change the prototype of an object literal.
+
+2.  Prototypes have simple rules, look at instance, look at prototype,
+    look at prototypes...  up the chain.
+
+    var duck = {
+      quack: "quack",
+      goNorth: function() { this.fly(); }
+    }
+
+    var mallord = Object.create(duck);
+    mallord.fly = function() { console.log("flapping wings"); };
+
+    var fakeMallord = Object.create(mallord);
+    fakeMallord.fly = function() { console.log("I can't"); };
+    fakeMallord.goNorth();
+
+    // don't work
+    duck.goNorth();
+
+3.  Prototypes are shared
+
+    function Duck () {};
+
+    mallord = new Duck();
+
+    Duck.prototype.fly = function() {console.log("flapping wings"); }
+
+    mallord.fly();
+
+    // instances are not shared
+    rubberDuck = new Duck();
+    rubberDuck.fly = function(){console.log("I can't");};
+
+    rubberDuck.fly();
+
+    uglyDuck = new Duck();
+    uglyDuck.fly();
+
+
