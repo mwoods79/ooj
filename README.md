@@ -71,6 +71,12 @@ Javascript.
       console.log("I get ran immidiately");
     })();
 
+    // Small performance gain by passing in globals to closures
+    (function($){
+      console.log($);
+    })(jQuery);
+    // Do this thousands of times, woot!!
+
 2 Returning or Exporting
 
     // Returning Object Literals
@@ -100,3 +106,4 @@ Javascript.
     })();
 
     new myModule();
+
