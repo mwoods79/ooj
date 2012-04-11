@@ -45,4 +45,41 @@ Javascript.
     // shows closure is not on global scope
     console.log(closure); // ERRRRORRR
 
+##  Immediate Functions and Modules
 
+1 Immediate Functions
+
+    // Some say module and immediate function are interchangable terms
+    (function(){
+      console.log("I get ran immidiately");
+    })();
+
+2 Returning or Exporting
+
+    // Returning Object Literals
+    var myModule = (function(){
+      var privateClosure = 0;
+      function voodoo(){
+        console.log("voodoo count: " + ++privateClosure);
+        // And I always return myself, when `new`
+      };
+      return {
+        voodoo: voodoo,
+        static: "Imma String, woopedy doo"
+      };
+    })();
+
+    myModule.voodoo();
+    myModule.voodoo();
+    myModule.voodoo();
+
+    // Returning Functions
+    var myModule = (function(){
+      function ImmaConstructor(){
+        console.log('I build stuff');
+        // And I always return myself, when `new`
+      };
+      return ImmaConstructor;
+    })();
+
+    new myModule();
