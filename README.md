@@ -45,41 +45,6 @@ Javascript.
     // shows closure is not on global scope
     console.log(closure); // ERRRRORRR
         
-
-###2  Function Scope (brief on variable hositing)
-
-	function setGlobal(){
-	  var config = "my setting";
-	}
-	
-	// This throw error "config is not defined" 
-	function getGlobal(){
-	  console.log(config);
-	}
-	
-	// Hoisting - When false still "defined", even if not assigned
-	function itsIffy() {
-	  if (false) {
-	    var iffy = "whatev's";
-	  }
-	  console.log(iffy);
-	}
-	
-	
-	// Functions can scope within functions
-	function outerScope(){
-	  var closure;
-	  function innerScope(){
-	    closure = "I'm told I am in a closure?";
-	    console.log(closure)
-	  }
-	  innerScope();
-	}
-	
-	outerScope();
-	// shows closure is not on global scope
-	console.log(closure); // ERRRRORRR
-
 ## Context
  
 ### 1	Object Context
