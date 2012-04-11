@@ -3,85 +3,93 @@ Javascript.
 
 ## Javascript only has two scopes
 
-### 1.  Global Scope
+1.  Global Scope
 
-	function setGlobal(){
-		config = "my setting";
-	}
-	
-	function getGlobal(){
-		console.log(config);
-	}
-
-### 2.  Function Scope (brief on variable hositing)
-
-    function setGlobal(){
-      var config = "my setting";
-    }
-
-    // This throw error "config is not defined" 
-    function getGlobal(){
-      console.log(config);
-    }
-    // Hoisting - When false still "defined", even if not assigned
-    function itsIffy() {
-      if (false) {
-        var iffy = "whatev's";
-      }
-      console.log(iffy);
-    }
-
-    // Functions can scope within functions
-    function outerScope(){
-      var closure;
-      function innerScope(){
-        closure = "I'm told I am in a closure?";
-        console.log(closure)
-      }
-      innerScope();
-    }
-
-    outerScope();
-    // shows closure is not on global scope
-    console.log(closure); // ERRRRORRR
-        
-## Context
- 
-### 1	Object Context
-
-	var o = {
-		x:10,
-		m: function(){
-			var x = 1;
-			console.log(x, this.x);
+		function setGlobal(){
+			config = "my setting";
 		}
-	}
-	o.m();
-*What's the output?* <!--outputs 1, 10-->
+		
+		function getGlobal(){
+			console.log(config);
+		}
 
-#### New context
-When you new up an object in JavaScript the constructor is passed a new context. This is simply object context in disguise.
+2.  Function Scope
 
-	var A = function(){
-		this.name = 'New';
-	};
-	var a = new A();
+	    function setGlobal(){
+	      var config = "my setting";
+	    }
+	
+	    // This throw error "config is not defined" 
+	    function getGlobal(){
+	      console.log(config);
+	    }
+	    
+	Functions and variables are **hoisted** to the top of the parent function
+	
+	    // Hoisting - When false still "defined", even if not assigned
+	    function itsIffy() {
+	      if (false) {
+	        var iffy = "whatev's";
+	      }
+	      console.log(iffy);
+	    }
+	
+	To fix this, use **closures**
+	
+	    // Functions can scope within functions
+	    function outerScope(){
+	      var closure;
+	      function innerScope(){
+	        closure = "I'm told I am in a closure?";
+	        console.log(closure)
+	      }
+	      innerScope();
+	    }
+	
+	    outerScope();
+	    // shows closure is not on global scope
+	    console.log(closure); // ERRRRORRR
+        
+## Context also has two types
+ 
+1.	Object Context
 
-*What's **this**?*<!-- o -->
-
-### 2	Global Context
-
-	var o = {
-		x:10,
-		m: function(){
-			var x = 1;
-			var f = function(){
+		var o = {
+			x:10,
+			m: function(){
+				var x = 1;
 				console.log(x, this.x);
 			}
-			f();
 		}
-	}
-	o.m();
+		o.m();
+		
+	*What's the output?* <!--outputs 1, 10-->
+
+	**New context**  
+
+	When you new up an object in JavaScript the constructor is passed a new context. This is simply object context in disguise.
+		
+			var A = function(){
+				this.name = 'New';
+			};
+			var a = new A();
+		
+		*What's **this**?*<!-- o -->
+
+2.	Global Context
+>The way JavaScript currently works is if a function doesn’t have context, or is not a method associated with an object, it executes in the global space. [1]
+
+		var o = {
+			x:10,
+			m: function(){
+				var x = 1;
+				var f = function(){
+					console.log(x, this.x);
+				}
+				f();
+			}
+		}
+		o.m();
 
 *What's the output?* <!--outputs 1, undefined-->
 
@@ -144,9 +152,25 @@ Attach the function to the object context
 		this.f();
 	}
 	//...
+	
+#### Specify context
+JavaScript provides the **call** and **apply** functions to call methods with a specified context
+
+	//...
+	m: function(){
+		var x = 1;
+		var f = function(){
+			console.log(x, this.x); // outputs 1, 10
+		}
+		f.call(this);
+		
+		var args = [1,'a'];
+		f.apply(this, args); 
+	}
+	//...
 
 ### Callbacks
-We commonly find nested functions used as callbacks
+We commonly find nested functions used as callbacks. Be aware that anonymous functions receive the global context!
 
 	var o = {
 		x:10,
@@ -172,6 +196,11 @@ A common solution to this problem is to save off a reference to **this**
 		}, 1);
 	}
 	//...
+
+
+### ??? Questions about Scope or Context ???
+
+
 
 ##  Immediate Functions and Modules
 
@@ -365,4 +394,4 @@ object literal.
 
 ##References
 
-[http://clubajax.org/javascript-scope-and-context-not-the-same-thing/](http://clubajax.org/javascript-scope-and-context-not-the-same-thing/)
+[1] [JavaScript Scope and Context – Not the Same Thing!](http://clubajax.org/javascript-scope-and-context-not-the-same-thing/)
