@@ -31,4 +31,19 @@ Javascript.
       console.log(iffy);
     }
 
+## Context 
+1	Object Context
+
+	var o = {
+		x:10,
+		m: function(){
+			var x = 1;
+			console.log(x, this.x);
+		}
+	}
+	o.m();
+**Whats *this?***
+
+2	Variable Context
+
 
