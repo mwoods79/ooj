@@ -31,4 +31,18 @@ Javascript.
       console.log(iffy);
     }
 
+    // Functions can scope within functions
+    function outerScope(){
+      var closure;
+      function innerScope(){
+        closure = "I'm told I am in a closure?";
+        console.log(closure)
+      }
+      innerScope();
+    }
+
+    outerScope();
+    // shows closure is not on global scope
+    console.log(closure); // ERRRRORRR
+
 
