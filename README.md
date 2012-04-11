@@ -75,6 +75,7 @@ Javascript.
       };
     })();
 
+    // myModule is a singleton
     myModule.voodoo();
     myModule.voodoo();
     myModule.voodoo();
@@ -90,3 +91,36 @@ Javascript.
 
     new myModule();
 
+# Objects and Prototypes
+
+1.  Prototypes are not blueprints like classes in C# or Java
+2.  JavaScript inherits from functions or prototypes
+3.  Nothing magic about prototype they are simply an object instance
+    that we are inheriting from
+
+## Object Literals
+
+#### Object Literals have many names
+1.  Object Literals
+2.  Hash
+3.  Associative Array
+4.  Key/Value Pair
+5.  JSON
+
+Object literals are singleton objecst with attributes and methods.
+It is an object that is itself an object instance
+
+    // Object literals are evaluated immediatly
+    // This is important to note if you are using jQuery
+    function stringMe(){ return "string"; };
+    var literal = {
+      key: 'value',
+      method: function() {
+        console.log("imma function");
+      },
+      assignedImmediatlyAsString: stringMe()
+    };
+
+    console.log(literal.method());
+    console.log(literal['method']());
+    console.log(literal['assignedImmediatlyAsString']);
