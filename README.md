@@ -2,94 +2,94 @@ This repository was used to demonstrate simple Object Oriented
 Javascript.
 
 ## Javascript only has two scopes
-1  Global Scope
+1.  Global Scope
 
-    function setGlobal(){
-      config = "my setting";
-    }
-    
-    function getGlobal(){
-      console.log(config);
-    }
+        function setGlobal(){
+          config = "my setting";
+        }
+        
+        function getGlobal(){
+          console.log(config);
+        }
 
-2  Function Scope (brief on variable hositing)
+2.  Function Scope (brief on variable hositing)
 
-    function setGlobal(){
-      var config = "my setting";
-    }
-   
-    // This throw error "config is not defined" 
-    function getGlobal(){
-      console.log(config);
-    }
-
-    // Hoisting - When false still "defined", even if not assigned
-    function itsIffy() {
-      if (false) {
-        var iffy = "whatev's";
-      }
-      console.log(iffy);
-    }
-
-    // Functions can scope within functions
-    function outerScope(){
-      var closure;
-      function innerScope(){
-        closure = "I'm told I am in a closure?";
-        console.log(closure)
-      }
-      innerScope();
-    }
-
-    outerScope();
-    // shows closure is not on global scope
-    console.log(closure); // ERRRRORRR
+        function setGlobal(){
+          var config = "my setting";
+        }
+     
+        // This throw error "config is not defined" 
+        function getGlobal(){
+          console.log(config);
+        }
+  
+        // Hoisting - When false still "defined", even if not assigned
+        function itsIffy() {
+          if (false) {
+            var iffy = "whatev's";
+          }
+          console.log(iffy);
+        }
+  
+        // Functions can scope within functions
+        function outerScope(){
+          var closure;
+          function innerScope(){
+            closure = "I'm told I am in a closure?";
+            console.log(closure)
+          }
+          innerScope();
+        }
+  
+        outerScope();
+        // shows closure is not on global scope
+        console.log(closure); // ERRRRORRR
 
 ##  Immediate Functions and Modules
 
-1 Immediate Functions
+1. Immediate Functions
 
-    // Some say module and immediate function are interchangable terms
-    (function(){
-      console.log("I get ran immidiately");
-    })();
+        // Some say module and immediate function are interchangable terms
+        (function(){
+          console.log("I get ran immidiately");
+        })();
+  
+        // Small performance gain by passing in globals to closures
+        (function($){
+          console.log($);
+        })(jQuery);
+        // Do this thousands of times, woot!!
 
-    // Small performance gain by passing in globals to closures
-    (function($){
-      console.log($);
-    })(jQuery);
-    // Do this thousands of times, woot!!
+2. Returning or Exporting
 
-2 Returning or Exporting
-
-    // Returning Object Literals
-    var myModule = (function(){
-      var privateClosure = 0;
-      function voodoo(){
-        console.log("voodoo count: " + ++privateClosure);
-        // And I always return myself, when `new`
-      };
-      return {
-        voodoo: voodoo,
-        static: "Imma String, woopedy doo"
-      };
-    })();
-
-    // myModule is a singleton
-    myModule.voodoo();
-    myModule.voodoo();
-    myModule.voodoo();
-
-    // Returning Functions
-    var myModule = (function(){
-      function ImmaConstructor(){
-        console.log('I build stuff');
-        // And I always return myself, when `new`
-      };
-      return ImmaConstructor;
-    })();
-
-    new myModule();
+        // Returning Object Literals
+        var myModule = (function(){
+          var privateClosure = 0;
+          function voodoo(){
+            console.log("voodoo count: " + ++privateClosure);
+            // And I always return myself, when `new`
+          };
+          return {
+            voodoo: voodoo,
+            static: "Imma String, woopedy doo"
+          };
+        })();
+  
+        // myModule is a singleton
+        myModule.voodoo();
+        myModule.voodoo();
+        myModule.voodoo();
+  
+        // Returning Functions
+        var myModule = (function(){
+          function ImmaConstructor(){
+            console.log('I build stuff');
+            // And I always return myself, when `new`
+          };
+          return ImmaConstructor;
+        })();
+  
+        new myModule();
 
 # Objects and Prototypes
 
@@ -129,40 +129,40 @@ object literal.
 #### Constructor Functions
 
 1.  Every function in javascript returns something, even if that
-    something is `undefined`;
+    something is `undefined`.
 
-    function evenThoughIDontSpecifyReturnIReturnUndefined () {
-      console.log("look for undefined after me");
-    };
-
-    evenThoughIDontSpecifyReturnIReturnUndefined();
+        function evenThoughIDontSpecifyReturnIReturnUndefined () {
+          console.log("look for undefined after me");
+        };
+    
+        evenThoughIDontSpecifyReturnIReturnUndefined();
 
 2.  Constructor functions have a convention of starting with a capital
     letter.
 
-    // Never return anything from a constructor function
-    function ImmaConstructor() {
-      return {
-        bad: "idea",
-        my:  "context",
-        was: "lost"
-      };
-    };
-
-    var ohNo = new ImmaConstructor();
-    console.log(ohNo);
+        // Never return anything from a constructor function
+        function ImmaConstructor() {
+          return {
+            bad: "idea",
+            my:  "context",
+            was: "lost"
+          };
+        };
+    
+        var ohNo = new ImmaConstructor();
+        console.log(ohNo);
 
 3.  You can tack things on to a new constructor instance
     
-    // This is horrible on memory, there is a better way
-    function ImmaConstructor() {
-      this.works = function () {console.log('this works')};
-      this.alsoWorks = function () {console.log('this also works')};
-    };
-
-    var imma = new ImmaConstructor();
-    imma.works();
-    imma.alsoWorks();
+        // This is horrible on memory, there is a better way
+        function ImmaConstructor() {
+          this.works = function () {console.log('this works')};
+          this.alsoWorks = function () {console.log('this also works')};
+        };
+    
+        var imma = new ImmaConstructor();
+        imma.works();
+        imma.alsoWorks();
 
 ####  Prototypes
 
@@ -172,39 +172,39 @@ object literal.
 2.  Prototypes have simple rules, look at instance, look at prototype,
     look at prototypes...  up the chain.
 
-    var duck = {
-      quack: "quack",
-      goNorth: function() { this.fly(); }
-    }
-
-    var mallord = Object.create(duck);
-    mallord.fly = function() { console.log("flapping wings"); };
-
-    var fakeMallord = Object.create(mallord);
-    fakeMallord.fly = function() { console.log("I can't"); };
-    fakeMallord.goNorth();
-
-    // don't work
-    duck.goNorth();
+        var duck = {
+          quack: "quack",
+          goNorth: function() { this.fly(); }
+        }
+    
+        var mallord = Object.create(duck);
+        mallord.fly = function() { console.log("flapping wings"); };
+    
+        var fakeMallord = Object.create(mallord);
+        fakeMallord.fly = function() { console.log("I can't"); };
+        fakeMallord.goNorth();
+    
+        // don't work
+        duck.goNorth();
 
 3.  Prototypes are shared
 
-    function Duck () {};
-
-    mallord = new Duck();
-
-    Duck.prototype.fly = function() {console.log("flapping wings"); }
-
-    mallord.fly();
-
-    // instances are not shared
-    rubberDuck = new Duck();
-    rubberDuck.fly = function(){console.log("I can't");};
-
-    rubberDuck.fly();
-
-    uglyDuck = new Duck();
-    uglyDuck.fly();
+        function Duck () {};
+    
+        mallord = new Duck();
+    
+        Duck.prototype.fly = function() {console.log("flapping wings"); }
+    
+        mallord.fly();
+    
+        // instances are not shared
+        rubberDuck = new Duck();
+        rubberDuck.fly = function(){console.log("I can't");};
+    
+        rubberDuck.fly();
+    
+        uglyDuck = new Duck();
+        uglyDuck.fly();
 
 ## Putting it all together for javascript that don't suck!
 
