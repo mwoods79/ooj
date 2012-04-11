@@ -124,3 +124,8 @@ It is an object that is itself an object instance
     console.log(literal.method());
     console.log(literal['method']());
     console.log(literal['assignedImmediatlyAsString']);
+
+#### Constructor Functions
+
+1.  Every function in javascript returns something, even if that
+    something is `undefined`;
