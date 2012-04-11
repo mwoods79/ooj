@@ -1,4 +1,4 @@
-foo = "foo"
+foo = "wazzup"
 
 function sayFoo(){
 console.log(foo);
