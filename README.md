@@ -206,4 +206,31 @@ object literal.
     uglyDuck = new Duck();
     uglyDuck.fly();
 
+## Putting it all together for javascript that don't suck!
 
+    var Person = (function () {
+      // global shared by all people
+      var count = 0;
+
+      function Person (name) {
+        console.log(++count, "people");
+        // name only belongs to this instance
+        this.name = name;
+      };
+
+      Person.prototype = {
+        // sayHello is shared in memory by every person
+        sayHello: function () { 
+          // even though the name belongs to the instance `this` allows
+          // access to the context
+          console.log("Hello, my name is " + this.name);
+        }
+      };
+
+      return Person;
+    })();
+
+    var m = new Person("Micah");
+    var c = new Person("Chase");
+    m.sayHello();
+    c.sayHello();
